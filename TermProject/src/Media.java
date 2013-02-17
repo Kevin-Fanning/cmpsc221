@@ -9,7 +9,7 @@ public abstract class Media
 
 	// Constructors------------------------------------------
 
-	Media()	// default constructor
+	public Media()	// default constructor
 	{
 		title = " ";
 		author = " ";
@@ -17,7 +17,7 @@ public abstract class Media
 		cost = 0.00;
 	}
 
-	Media(String titleIn, String authorIn, int rankIn, double costIn)	// init constructor
+	public Media(String titleIn, String authorIn, int rankIn, double costIn)	// init constructor
 	{
 		title = titleIn;
 		author = authorIn;
@@ -27,44 +27,44 @@ public abstract class Media
 
 	// Accessors----------------------------------------------
 
-	String GetTitle()
+	public String GetTitle()
 	{
 		return title;
 	}
 
-	String GetAuthor()
+	public String GetAuthor()
 	{
 		return author;
 	}
 
-	int GetRank()
+	public int GetRank()
 	{
 		return rank;
 	}
 
-	double GetCost()
+	public double GetCost()
 	{
 		return cost;
 	}
 
 	// Set Methods --------------------------------------------
 
-	void SetTitle(String titleIn)
+	public void SetTitle(String titleIn)
 	{
 		title = titleIn;
 	}
 
-	void SetAuthor(String authorIn)
+	public void SetAuthor(String authorIn)
 	{
 		title = authorIn;
 	}
 
-	void SetRank(int rankIn)
+	public void SetRank(int rankIn)
 	{
 		rank = rankIn;
 	}
 
-	void SetCost(double costIn)
+	public void SetCost(double costIn)
 	{
 		cost = costIn;
 	}

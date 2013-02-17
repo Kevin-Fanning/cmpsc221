@@ -30,6 +30,17 @@ public class MediaStore {
         media.add(newMedia);
     }
     
+    //Getters --------------------------------------------------------------
+    public static String getUsername()
+    {
+        return username;
+    }
+    public static LinkedList<Media> getAllMedia()
+    {
+        return media;
+    }
+    //These next three iterate over the list and pulls the ones with matching type
+    //I tried to use generics, but I couldn't get it to work
     public static LinkedList<Music> listMusic()
     {
         LinkedList<Music> result = new LinkedList<>();
@@ -38,6 +49,30 @@ public class MediaStore {
             if (m instanceof Music)
             {
                 result.add((Music)m);
+            }
+        }
+        return result;
+    }
+    public static LinkedList<Film> listFilms()
+    {
+        LinkedList<Film> result = new LinkedList<>();
+        for (Media m : media)
+        {
+            if (m instanceof Film)
+            {
+                result.add((Film)m);
+            }
+        }
+        return result;
+    }
+    public static LinkedList<AudioBook> listAudioBooks()
+    {
+        LinkedList<AudioBook> result = new LinkedList<>();
+        for (Media m : media)
+        {
+            if (m instanceof AudioBook)
+            {
+                result.add((AudioBook)m);
             }
         }
         return result;
