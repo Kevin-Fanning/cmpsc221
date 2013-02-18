@@ -3,12 +3,12 @@
 public abstract class Media
 {
     protected static int numOfProducts = 0; // how many products exist. used for productID allocation
-	protected String title;		// title of media
-	protected String author;	// author of media (same as artist for music)
-	protected int rank;			// rank of media (for top 20 chart)
-	protected double cost;		// cost of specific media type
-        protected int productID;        // unique identifier for media
-        protected String filename;      // the location of the media file
+	protected String title;			// title of media
+	protected String author;		// author of media (same as artist for music)
+	protected int rank;				// rank of media (for top 20 chart)
+	protected double cost;			// cost of specific media type
+    protected int productID;        // unique identifier for media
+    protected String filename;      // the location of the media file
 
 	// Constructors------------------------------------------
 
@@ -27,8 +27,8 @@ public abstract class Media
 		author = authorIn;
 		rank = rankIn;
 		cost = costIn;
-                this.filename = filename;
-                productID = ++numOfProducts;
+        this.filename = filename;
+        productID = ++numOfProducts;
 	}
 
 	// Accessors----------------------------------------------
@@ -53,15 +53,15 @@ public abstract class Media
 		return cost;
 	}
 
-        public int getProductID()
-        {
-            return productID;
-        }
+    public int getProductID()
+    {
+        return productID;
+    }
         
-        public String getFilename()
-        {
-            return filename;
-        }
+    public String getFilename()
+    {
+        return filename;
+    }
 	// Set Methods --------------------------------------------
 
 	public void setTitle(String titleIn)
