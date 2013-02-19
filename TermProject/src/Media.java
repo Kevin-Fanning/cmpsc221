@@ -1,5 +1,18 @@
-// Media Super Class
+/** * 
+Name: Jeff Dreyer 
+* Section: 1 
+* Program: Project Phase 1 
+* Date: 2/18/2013 
+* This File contains the Media Abstract class which will be used by its subclasses 
+* (Music, Album, Film, and AudioBook)
+*/
 
+/** 
+* @author Jeff Dreyer
+* @version 1.0 2/18/2013
+* 
+* The Media class is an abstract class that will be the auper class for the Music, Album, Film, and AudioBook subclasses
+*/
 public abstract class Media
 {
     protected static int numOfProducts = 0; // how many products exist. used for productID allocation
@@ -12,6 +25,7 @@ public abstract class Media
 
 	// Constructors------------------------------------------
 
+    // Default Constructor
 	public Media()	// default constructor
 	{
 		title = " ";
@@ -21,6 +35,7 @@ public abstract class Media
                 productID = ++numOfProducts;
 	}
 
+	// Init Constructor
 	public Media(String titleIn, String authorIn, int rankIn, double costIn, String filename)	// init constructor
 	{
 		title = titleIn;
@@ -33,52 +48,62 @@ public abstract class Media
 
 	// Accessors----------------------------------------------
 
+	// method that will return title data member
 	public String getTitle()
 	{
 		return title;
 	}
 
+	// method that will return author data member
 	public String getAuthor()
 	{
 		return author;
 	}
 
+	// method that will return rank data member
 	public int getRank()
 	{
 		return rank;
 	}
 
+	// method that will return cost data member
 	public double getCost()
 	{
 		return cost;
 	}
 
+	// method that will return productID data member
     public int getProductID()
     {
         return productID;
     }
-        
+    
+    // method that will return filename data member    
     public String getFilename()
     {
         return filename;
     }
 	// Set Methods --------------------------------------------
 
+    // method that will set title data member
 	public void setTitle(String titleIn)
 	{
 		title = titleIn;
 	}
 
+	// method that will set author data member
 	public void setAuthor(String authorIn)
 	{
-		title = authorIn;
+		author = authorIn;
 	}
 
+	// method that will set rank data member
 	public void setRank(int rankIn)
 	{
 		rank = rankIn;
 	}
 
+	// method that will set cost data member
 	public void setCost(double costIn)
 	{
 		cost = costIn;

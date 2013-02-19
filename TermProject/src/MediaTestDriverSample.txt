@@ -1,0 +1,17 @@
+jeff@Jeff:~/Documents/221Project/cmpsc221/TermProject/src$ javac MediaTestDriver.java 
+jeff@Jeff:~/Documents/221Project/cmpsc221/TermProject/src$ java MediaTestDriver 
+
+Hello
+Test McAuthor
+1
+0.99
+2
+1.mp3
+Hello
+Test McAuthor
+1
+0.99
+ 
+Thriller
+10
+2
