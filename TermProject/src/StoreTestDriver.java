@@ -8,9 +8,9 @@ public class StoreTestDriver
         MediaStore.Login("Kevin","nanana");
         
         try {
-            MediaStore.addMedia(new Music("music111", "ffff", 3, 9.99, "1.mp3"));
-            MediaStore.addMedia(new Music("music222", "ffff", 5, 11.99, "2.mp3"));
-            MediaStore.addMedia(new AudioBook("book", "FDFDFD", 6, 8.57, "3.mp3"));
+            MediaStore.addMedia(new Music("music111", "ffff", 3, 9.99, "1.mp3", "aGenre"));
+            MediaStore.addMedia(new Music("music222", "ffff", 5, 11.99, "2.mp3", "Genre2"));
+            MediaStore.addMedia(new AudioBook("book", "FDFDFD", 6, 8.57, "3.mp3", 4));
         } 
         catch (FileNotFoundException e)
         {
