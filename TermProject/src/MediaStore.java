@@ -1,16 +1,29 @@
+/**
+ * name: Kevin Fanning
+ * program: Term Project
+ * date: 3/18/2013
+ * section: 1
+ */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * This class 
+ * @author Kevin
+ */
 public class MediaStore {
     private static String username = "";    //currently logged in user
     private static String password = "";    //currently logged in user's pass
     private static boolean isLoggedIn = false;//if someone is logged in
+    private static boolean isAdmin = false; //is the logged in user an admin?
     
     //TODO: linkedList is temporary replacement for a database
-    private static LinkedList<Media> media = new LinkedList<>();
+    //private static LinkedList<Media> media = new LinkedList<>();
+    private static ArrayList<Media> media = new ArrayList<>();
     
     /**
      * Logs in a user
@@ -23,6 +36,7 @@ public class MediaStore {
         MediaStore.username = username;
         MediaStore.password = password;
         isLoggedIn = true;
+        if (username == "admin") { isAdmin = true; }
     }
     /**
      * logs out the user
@@ -57,7 +71,7 @@ public class MediaStore {
     {
         return username;
     }
-    public static LinkedList<Media> getAllMedia()
+    public static ArrayList<Media> getAllMedia()
     {
         return media;
     }
@@ -67,14 +81,14 @@ public class MediaStore {
     /**
      * Returns all media that is of type music in a list
      */
-    public static LinkedList<Music> listMusic()
+    public static ArrayList<Media> listMusic()
     {
-        LinkedList<Music> result = new LinkedList<>();
+        ArrayList<Media> result = new ArrayList<>();
         for (Media m : media)
         {
             if (m instanceof Music)
             {
-                result.add((Music)m);
+                result.add(m);
             }
         }
         return result;
@@ -83,14 +97,14 @@ public class MediaStore {
     /**
      * Returns all media that is of type film in a list
      */
-    public static LinkedList<Film> listFilms()
+    public static ArrayList<Media> listFilms()
     {
-        LinkedList<Film> result = new LinkedList<>();
+        ArrayList<Media> result = new ArrayList<>();
         for (Media m : media)
         {
             if (m instanceof Film)
             {
-                result.add((Film)m);
+                result.add(m);
             }
         }
         return result;
@@ -98,9 +112,9 @@ public class MediaStore {
     /**
      * Returns all media that is of type audiobook in a list
      */
-    public static LinkedList<AudioBook> listAudioBooks()
+    public static ArrayList<Media> listAudioBooks()
     {
-        LinkedList<AudioBook> result = new LinkedList<>();
+        ArrayList<Media> result = new ArrayList<>();
         for (Media m : media)
         {
             if (m instanceof AudioBook)
@@ -120,7 +134,7 @@ public class MediaStore {
      */
     public static void purchaseProduct(int productID, String savePath) throws IOException
     {
-        if (isLoggedIn)
+        if (isLoggedIn && !isAdmin)
         {
             for (Media m : media)
             {

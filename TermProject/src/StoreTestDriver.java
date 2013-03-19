@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class StoreTestDriver
@@ -16,9 +17,9 @@ public class StoreTestDriver
         {
             System.err.println("Tried to add media that did not exist.\n" + e.getMessage());
         }
-        LinkedList<Music> allMusic = MediaStore.listMusic();
+        ArrayList<Media> allMusic = MediaStore.listMusic();
         
-        for (Music m : allMusic)
+        for (Media m : allMusic)
         {
             System.out.println(m.getTitle());
         }

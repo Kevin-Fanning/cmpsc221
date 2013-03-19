@@ -109,4 +109,9 @@ public abstract class Media
 		cost = costIn;
 	}
 
+        @Override
+        public String toString()
+        {
+            return productID +"    " +  title + "    |    " + author;
+        }
 }

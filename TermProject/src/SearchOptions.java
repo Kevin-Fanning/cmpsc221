@@ -1,4 +1,5 @@
 
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 class SearchOptions extends JPanel
@@ -6,19 +7,23 @@ class SearchOptions extends JPanel
     static final String[] mediaTypes = {"All", "Music Albums", "Music Singles",
         "Films", "AudioBooks" };
     
-    static final String[] sortOptions = {"Title", "Artist/Author", "Genre" };
+    static final String[] sortOptions = {"Title", "Artist/Author", "Genre", "Rank" };
     
-    JButton button_search;
-    JLabel filterBy;
-    JLabel sortBy;
-    JLabel search;
-    JComboBox cb_filterBy;
-    JComboBox cb_sortBy;
-    JTextField searchField;
+    private ActionListener parent;
     
-    public SearchOptions()
+    private JButton button_search;
+    private JLabel filterBy;
+    private JLabel sortBy;
+    private JLabel search;
+    private JComboBox cb_filterBy;
+    private JComboBox cb_sortBy;
+    private JTextField searchField;
+    
+    public SearchOptions(ActionListener parent)
     {
         super();
+        
+        this.parent = parent;
         
         filterBy = new JLabel("Filter by: ");
         add(filterBy);
@@ -38,6 +43,16 @@ class SearchOptions extends JPanel
         add(searchField);
         
         button_search = new JButton("Search");
+        button_search.addActionListener(parent);
         add(button_search);
+    }
+    
+    public String getSelectedFilter()
+    {
+        return cb_filterBy.getItemAt(cb_filterBy.getSelectedIndex()).toString();
+    }
+    public String getSelectedSort()
+    {
+        return cb_sortBy.getItemAt(cb_sortBy.getSelectedIndex()).toString();
     }
 }

@@ -15,4 +15,13 @@ class SearchResults extends JPanel
         productList.setPreferredSize(new Dimension(300, 400));
         add(productList);
     }
+    
+    public void addMediaToList(Media media)
+    {
+        productListModel.addElement(media);
+    }
+    public void clearList()
+    {
+        productListModel.clear();
+    }
 }
