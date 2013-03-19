@@ -11,7 +11,7 @@ class SearchOptions extends JPanel
     
     private ActionListener parent;
     
-    private JButton button_search;
+    JButton button_search;
     private JLabel filterBy;
     private JLabel sortBy;
     private JLabel search;
@@ -54,5 +54,9 @@ class SearchOptions extends JPanel
     public String getSelectedSort()
     {
         return cb_sortBy.getItemAt(cb_sortBy.getSelectedIndex()).toString();
+    }
+    public String getSearchField()
+    {
+        return searchField.getText();
     }
 }

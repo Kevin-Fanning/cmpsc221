@@ -30,13 +30,14 @@ public class MediaStore {
      * @param username  the username of the user
      * @param password  the password of the user
      */
-    public static void Login(String username, String password)
+    public static boolean Login(String username, String password)
     {
         //TODO: Look up username in database and check it against password
         MediaStore.username = username;
         MediaStore.password = password;
         isLoggedIn = true;
         if (username == "admin") { isAdmin = true; }
+        return true;
     }
     /**
      * logs out the user
@@ -132,7 +133,7 @@ public class MediaStore {
      * @param savePath  the path where the purchased product will be saved
      * @throws IOException if the files could not be opened
      */
-    public static void purchaseProduct(int productID, String savePath) throws IOException
+    public static void purchaseProduct(int productID, String savePath)
     {
         if (isLoggedIn && !isAdmin)
         {
@@ -140,10 +141,17 @@ public class MediaStore {
             {
                 if (m.getProductID() == productID)
                 {
-                    File mediaFile = new File(m.getFilename());
-                    File targetFile = new File(savePath);
-                    Files.copy(mediaFile.toPath(), targetFile.toPath());
-                    return;
+                    try
+                    {
+                        File mediaFile = new File(m.getFilename());
+                        File targetFile = new File(savePath);
+                        Files.copy(mediaFile.toPath(), targetFile.toPath());
+                        return;
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println("FILE IO ERROR");
+                    }
                 }
             }
         }
