@@ -1,11 +1,11 @@
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-class MediaDetailsPanel extends DetailsPanel
+class MediaDetailsPanel_Version2 extends DetailsPanel
 {
     
     JButton purchase;
-    public MediaDetailsPanel(ActionListener parent)
+    public MediaDetailsPanel_Version2(ActionListener parent)
     {
         super();
                 
