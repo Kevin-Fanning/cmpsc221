@@ -5,6 +5,8 @@
  * section: 1
  */
 
+// compiles no errors
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -25,7 +27,7 @@ class ManagerFrontPanel extends FrontPanel_Version2
 
 	ManagerDetailsPanel panel_details;    //Panel containing details of the selected media
     
-    public managerFrontPanel()
+    public ManagerFrontPanel()
     {
         super();
         
@@ -35,30 +37,43 @@ class ManagerFrontPanel extends FrontPanel_Version2
         add(panel_details, BorderLayout.EAST);
         
     }
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        super();
+        super.actionPerformed(e);
 
-        if(e.getSource == RemoveMedia)
+        if(e.getSource() == panel_details.RemoveMedia)
         {
             // remove current song
         }
 
-        else if(e.getSource == CheckStats)
+        else if(e.getSource() == panel_details.CheckStats)
         {
             // check stats of current song
         }
 
-        else if(e.getSource == AddMedia)
+        else if(e.getSource() == panel_details.AddMedia)
         {
             // add new media 
         }
 
-        else if(e.getSource == CheckTotal)
+        else if(e.getSource() == panel_details.CheckTotal)
         {
             // check total sales for current store
         }
-    }   
+    } 
+
+    @Override
+    public void valueChanged(ListSelectionEvent e)
+    {
+        if (e.getValueIsAdjusting())
+        {
+            if (panel_results.productList.getSelectedIndex() != -1)
+            {
+                panel_details.setMedia((Media)panel_results.productList.getSelectedValue());
+            }
+        }
+    }  
     
 }

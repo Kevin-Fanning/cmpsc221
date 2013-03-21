@@ -5,6 +5,8 @@
  * section: 1
  */
 
+// compiles no errors
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -66,19 +68,7 @@ class FrontPanel_Version2 extends JPanel implements ActionListener, ListSelectio
         }
         
     }
-    
-    
-    @Override
-    public void valueChanged(ListSelectionEvent e)
-    {
-        if (e.getValueIsAdjusting())
-        {
-            if (panel_results.productList.getSelectedIndex() != -1)
-            {
-                panel_details.setMedia((Media)panel_results.productList.getSelectedValue());
-            }
-        }
-    }
+          
     
     /**
      * Reads and filters the master media list according to filters. This will 
@@ -140,4 +130,7 @@ class FrontPanel_Version2 extends JPanel implements ActionListener, ListSelectio
             }
         }
     }
+
+    public void valueChanged(ListSelectionEvent e)
+    {    }
 }

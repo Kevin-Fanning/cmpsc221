@@ -1,15 +1,18 @@
+// Author @Jeff
+
+// compiles no errors
+
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.GridLayout;
 
 class ManagerDetailsPanel_Version2 extends JPanel
 {
-    Jpanel buttonPanel = new Jpanel();
-    buttonPanel.setLayout(new GridLayout(2,2,5,5));
+    JPanel buttonPanel = new JPanel(new GridLayout(2,2,5,5));
     JButton RemoveMedia;
-    Jbutton CheckStats;
-    Jbutton AddMedia;
-    Jbutton CheckTotal;
+    JButton CheckStats;
+    JButton AddMedia;
+    JButton CheckTotal;
 
     public ManagerDetailsPanel_Version2(ActionListener parent)
     {
