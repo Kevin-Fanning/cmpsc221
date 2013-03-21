@@ -1,8 +1,11 @@
+// DetailsPanel superclass
+// 
+//Author @ Jeff Dreyer
+
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.awt.GridLayout;
 
-class ManagerDetailsPanel extends JPanel
+class DetailsPanel extends JPanel
 {
     ActionListener parent;
     
@@ -13,14 +16,8 @@ class ManagerDetailsPanel extends JPanel
     JLabel author;
     JLabel genre;
     JLabel price;
-    Jpanel buttonPanel = new Jpanel();
-    buttonPanel.setLayout(new GridLayout(2,2,5,5));
-    JButton RemoveMedia;
-    Jbutton CheckStats;
-    Jbutton AddMedia;
-    Jbutton CheckTotal;
-
-    public MediaDetailsPanel(ActionListener parent)
+    
+    public DetailsPanel(ActionListener parent)
     {
         super();
         
@@ -31,24 +28,11 @@ class ManagerDetailsPanel extends JPanel
         author = new JLabel();
         genre = new JLabel();
         price = new JLabel();
-        RemoveMedia = new JButton("Remove");
-        RemoveMedia.addActionListener(parent);
-        buttonPanel.add(RemoveMedia);
-        CheckStats = new JButton("Check Media Sales");
-        CheckStats.addActionListener(parent);
-        buttonPanel.add(CheckStats);
-        AddMedia = new JButton("Add New Media");
-        AddMedia.addActionListener(parent);
-        buttonPanel.add(AddMedia);
-        CheckTotal = new JButton("Check Total Store Sales");
-        CheckTotal.addActionListener(parent);
-        buttonPanel.add(CheckTotal);
-        
+
         add(title);
         add(author);
         add(genre);
         add(price);
-        add(buttonPanel);
     }
     
     public void setMedia(Media m)
