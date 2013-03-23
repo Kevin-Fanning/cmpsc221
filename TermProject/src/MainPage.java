@@ -13,6 +13,7 @@ class MainPage extends JFrame implements ActionListener
 { 
     JPanel currentPanel;
     StoreFrontPanel storeFront;
+    ManagerFrontPanel managerPage;
     LoginPanel loginPanel;
     
     JMenuBar menuBar_notLoggedIn;
@@ -42,6 +43,7 @@ class MainPage extends JFrame implements ActionListener
         menuBar_loggedIn.add(menu_file_loggedOut);
         
         storeFront = new StoreFrontPanel();
+        managerPage = new ManagerFrontPanel();
         loginPanel = new LoginPanel(this);
         
         currentPanel = loginPanel;
@@ -56,9 +58,16 @@ class MainPage extends JFrame implements ActionListener
         //User clicked logout
         if (e.getSource() == mi_logout)
         {
+            if (MediaStore.isAdmin)
+            {
+                remove(managerPage);
+            }
+            else
+            {
+                remove(storeFront);
+            }
             MediaStore.Logout();
             setJMenuBar(menuBar_notLoggedIn);
-            remove(storeFront);
             add(loginPanel);
             setVisible(true);
             repaint();
@@ -75,7 +84,14 @@ class MainPage extends JFrame implements ActionListener
             {
                 this.setJMenuBar(menuBar_loggedIn);
                 this.remove(loginPanel);
-                this.add(storeFront);
+                if (MediaStore.isAdmin)
+                {
+                    this.add(managerPage);
+                }
+                else
+                {
+                    this.add(storeFront);
+                }
                 setVisible(true);
                 repaint();
             }

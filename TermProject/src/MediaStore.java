@@ -19,7 +19,7 @@ public class MediaStore {
     private static String username = "";    //currently logged in user
     private static String password = "";    //currently logged in user's pass
     private static boolean isLoggedIn = false;//if someone is logged in
-    private static boolean isAdmin = false; //is the logged in user an admin?
+    public static boolean isAdmin = false; //is the logged in user an admin?
     
     //TODO: linkedList is temporary replacement for a database
     //private static LinkedList<Media> media = new LinkedList<>();
@@ -36,7 +36,15 @@ public class MediaStore {
         MediaStore.username = username;
         MediaStore.password = password;
         isLoggedIn = true;
-        if (username == "admin") { isAdmin = true; }
+        System.out.println(username);
+        if ("admin".equals(username)) 
+        { 
+            isAdmin = true; 
+        }
+        else
+        {
+            isAdmin = false;
+        }
         return true;
     }
     /**
