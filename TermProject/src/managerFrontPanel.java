@@ -46,6 +46,7 @@ class ManagerFrontPanel extends FrontPanel
         if(e.getSource() == panel_details.RemoveMedia)
         {
             // remove current song
+            MediaStore.removeMedia(panel_details.currentMedia);
         }
 
         else if(e.getSource() == panel_details.CheckStats)

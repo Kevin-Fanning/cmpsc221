@@ -75,6 +75,11 @@ public class MediaStore {
         }
     }
     
+    public static void removeMedia(Media dMedia)
+    {
+        media.remove(dMedia);
+    }
+    
     //Getters --------------------------------------------------------------
     public static String getUsername()
     {
