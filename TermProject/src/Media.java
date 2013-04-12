@@ -1,5 +1,6 @@
 /** * 
 Name: Jeff Dreyer 
+*       Kevin Fanning
 * Section: 1 
 * Program: Project Phase 1 
 * Date: 2/18/2013 
@@ -8,7 +9,7 @@ Name: Jeff Dreyer
 */
 
 /** 
-* @author Jeff Dreyer
+* @author Jeff Dreyer, Kevin Fanning
 * @version 1.0 2/18/2013
 * 
 * The Media class is an abstract class that will be the auper class for the Music, Album, Film, and AudioBook subclasses
@@ -21,7 +22,8 @@ public abstract class Media
 	protected int rank;				// rank of media (for top 20 chart)
 	protected double cost;			// cost of specific media type
     protected int productID;        // unique identifier for media
-    protected String filename;      // the location of the media file
+    protected String duration;
+    protected String genre;
 
 	// Constructors------------------------------------------
 
@@ -33,17 +35,20 @@ public abstract class Media
 		rank = -1;
 		cost = 0.00;
                 productID = ++numOfProducts;
+                duration = "";
+                genre = " ";
 	}
 
 	// Init Constructor
-	public Media(String titleIn, String authorIn, int rankIn, double costIn, String filename)	// init constructor
+	public Media(String titleIn, String authorIn, int rankIn, double costIn, String duration, String genre)	// init constructor
 	{
 		title = titleIn;
 		author = authorIn;
 		rank = rankIn;
 		cost = costIn;
-        this.filename = filename;
         productID = ++numOfProducts;
+            this.duration = duration;
+            this.genre = genre;
 	}
 
 	// Accessors----------------------------------------------
@@ -71,6 +76,7 @@ public abstract class Media
 	{
 		return cost;
 	}
+        
 
 	// method that will return productID data member
     public int getProductID()
@@ -78,10 +84,14 @@ public abstract class Media
         return productID;
     }
     
-    // method that will return filename data member    
-    public String getFilename()
+    public String getDuration()
     {
-        return filename;
+        return duration;
+    }
+    
+    public String getGenre()
+    {
+        return genre;
     }
 	// Set Methods --------------------------------------------
 
@@ -109,9 +119,21 @@ public abstract class Media
 		cost = costIn;
 	}
 
+        public void setDuration(String duration)
+        {
+            this.duration = duration;
+        }
+        
+        public void setGenre(String genre)
+        {
+            this.genre = genre;
+        }
+        
+        public void setReleaseYear(int releaseYear){}
+        
         @Override
         public String toString()
         {
-            return productID +"    " +  title + "    |    " + author;
+            return title + "  |  " + author + "  |  " + genre + "  |  " + duration + "  |  " + rank + "  |  " + cost;
         }
 }

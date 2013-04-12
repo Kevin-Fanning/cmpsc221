@@ -43,6 +43,6 @@ class LoginPanel extends JPanel
     }
     public String getPassword()
     {
-        return passwordField.getPassword().toString();
+        return new String(passwordField.getPassword());
     }
 }

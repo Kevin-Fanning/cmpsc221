@@ -25,7 +25,7 @@ import javax.swing.event.ListSelectionListener;
 class FrontPanel extends JPanel implements ActionListener, ListSelectionListener
 {
 
-	SearchOptions panel_searchOptions;  //Panel containing options to filter the media
+    SearchOptions panel_searchOptions;  //Panel containing options to filter the media
     SearchResults panel_results;        //Panel containing a selector for filtered media
     
     public FrontPanel()
@@ -37,26 +37,18 @@ class FrontPanel extends JPanel implements ActionListener, ListSelectionListener
         
         //Search Options ---------------------------------------------------
         panel_searchOptions = new SearchOptions(this);
-        panel_searchOptions.setPreferredSize(new Dimension(600, 50));
+        panel_searchOptions.setPreferredSize(new Dimension(800, 50));
         add(panel_searchOptions, BorderLayout.NORTH);
         
         //Results -------------------------------------------------------------
         panel_results = new SearchResults(this);
-        panel_results.setPreferredSize(new Dimension(300, 400));
+        panel_results.setPreferredSize(new Dimension(500, 400));
         add(panel_results, BorderLayout.WEST);
         
                 
         
-        //TEST STUFF
-        try {
-            MediaStore.addMedia(new Film("Star Wars", "George Lucas", 1, 10.99, "starwars.mp4", "Action"));
-            MediaStore.addMedia(new Film("Lion King", "ZDisney", 2, 15.99, "The Lion King.mp4", "Family"));
-            MediaStore.addMedia(new Music("Take Me Out", "Franz Ferdinand", 4, 0.99, "Take Me Out.mp3", "Alt Rock"));
-        }
-        catch (Exception e)
-        {
-            System.err.println("Test file to upload not found");
-        }
+        
+
     }
 
     @Override
@@ -85,7 +77,7 @@ class FrontPanel extends JPanel implements ActionListener, ListSelectionListener
             case "Films":
                 media = MediaStore.listFilms();
                 break;
-            case "Music Singles":
+            case "Music":
                 media = MediaStore.listMusic();
                 break;
             case "AudioBooks":
@@ -106,9 +98,9 @@ class FrontPanel extends JPanel implements ActionListener, ListSelectionListener
                     case "Title":
                         return left.getTitle().compareTo(right.getTitle());
                     case "Genre":
-                        return left.getFilename().compareTo(right.getFilename());
+                        return left.getGenre().compareTo(right.getGenre());
                     case "Rank":
-                        return Integer.valueOf(left.getRank()).compareTo(Integer.valueOf(right.getRank()));
+                        return Integer.valueOf(right.getRank()).compareTo(Integer.valueOf(left.getRank()));
                 }
                 return 0;
             }
@@ -131,6 +123,17 @@ class FrontPanel extends JPanel implements ActionListener, ListSelectionListener
         }
     }
 
+    public void setCredits(double credits)
+    {
+       
+    }
+    
+    public void setTotalSold(int sold)
+    {
+        
+    }
+    
+    
     public void valueChanged(ListSelectionEvent e)
     {    }
 }

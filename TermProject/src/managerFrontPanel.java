@@ -26,11 +26,14 @@ class ManagerFrontPanel extends FrontPanel
 {
 
 	ManagerDetailsPanel panel_details;    //Panel containing details of the selected media
-    
+        NewMediaDialog nw;
+        Media editing;
     public ManagerFrontPanel()
     {
         super();
-        
+        nw = new NewMediaDialog((JFrame)SwingUtilities.getRoot(this));
+        nw.setSize(400,400);
+        nw.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //Details ------------------------------------------------------------
         panel_details = new ManagerDetailsPanel(this);
         panel_details.setPreferredSize(new Dimension(300, 400));
@@ -47,21 +50,18 @@ class ManagerFrontPanel extends FrontPanel
         {
             // remove current song
             MediaStore.removeMedia(panel_details.currentMedia);
+            int total = 0;
+                    for (int i = 0; i < MediaStore.getAllMedia().size(); i++)
+                    {
+                        total += MediaStore.getAllMedia().get(i).getRank();
+                    }
+                    panel_details.tf_totalSold.setText(new Integer(total).toString());
         }
-
-        else if(e.getSource() == panel_details.CheckStats)
-        {
-            // check stats of current song
-        }
-
         else if(e.getSource() == panel_details.AddMedia)
         {
             // add new media 
-        }
-
-        else if(e.getSource() == panel_details.CheckTotal)
-        {
-            // check total sales for current store
+            
+            nw.setVisible(true);
         }
     } 
 

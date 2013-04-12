@@ -31,13 +31,13 @@ public class MediaTestDriver
 
     	// Default and init constructor testing for each subclass of Media
     	Music test3 		= new Music();
-    	Music test4 		= new Music(titleIn, authorIn, rankIn, costIn, filename, genreInMusic);
+    	Music test4 		= new Music(titleIn, authorIn, rankIn, costIn, genreInMusic, "3:10");
     	Film test5 			= new Film();
-    	Film test6 			= new Film(titleIn, authorIn, rankIn, costIn, filename, genreInMovie);
-    	AudioBook test7 	= new AudioBook();
-    	AudioBook test8 	= new AudioBook(titleIn, authorIn, rankIn, costIn, filename, chaptersIn);
-    	Album test9 		= new Album();
-    	Album test0 		= new Album(titleIn, authorIn, rankIn, costIn, filename);
+    	//Film test6 			= new Film(titleIn, authorIn, rankIn, costIn, 1900, "1:30:00");
+    	//AudioBook test7 	= new AudioBook();
+    	//AudioBook test8 	= new AudioBook(titleIn, authorIn, rankIn, costIn, chaptersIn, "45:00");
+    	//Album test9 		= new Album();
+    	//Album test0 		= new Album(titleIn, authorIn, rankIn, costIn);
 	    
 
         // Media Methods 
@@ -51,7 +51,6 @@ public class MediaTestDriver
 		
 	    System.out.printf("\n%d",test4.getProductID());
 	      
-	    System.out.printf("\n"+test4.getFilename());
 	    
 	    test3.setTitle(titleIn);		
 
@@ -74,20 +73,20 @@ public class MediaTestDriver
 		test3.setGenre("Metal");
 
 		// Film Specific Methods
-		System.out.printf("\n"+test6.getGenre());
-		test5.setGenre("Action");
+		//System.out.printf("\n"+test6.getGenre());
+		//test5.setGenre("Action");
 
 		// AudioBook Specific Methods
-		System.out.printf("\n%d",test8.getChapters());
-		test7.setChapters(19);
+		//System.out.printf("\n%d",test8.getChapters());
+		//test7.setChapters(19);
 
 		// Album Specific Methods
-		test0.addMusic(test3);
-		test0.addMusic(test4);
+		//test0.addMusic(test3);
+		//test0.addMusic(test4);
 
-		System.out.printf("\n%d\n",test0.getAlbumSize());
+		//System.out.printf("\n%d\n",test0.getAlbumSize());
 
-		testVector = test0.getMusicIDs();
+		//testVector = test0.getMusicIDs();
 
   	}
 

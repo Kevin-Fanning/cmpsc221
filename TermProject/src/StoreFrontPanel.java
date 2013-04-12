@@ -20,6 +20,7 @@ import java.util.Comparator;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.text.DecimalFormat;
 
 /**
  * This class is the GUI for the store front that the customer sees
@@ -47,8 +48,16 @@ class StoreFrontPanel extends FrontPanel
 
         if(e.getSource() == panel_details.purchase)
         {
-            MediaStore.purchaseProduct(panel_details.currentMedia.getProductID(),
-                    "Downloads/" + panel_details.currentMedia.getFilename());
+            if (MediaStore.purchaseProduct(panel_details.currentMedia.getProductID()))
+            {
+                DecimalFormat df = new DecimalFormat("####.##");
+                panel_details.currentCredits.setText(df.format(MediaStore.getUser().balance));
+                JOptionPane.showMessageDialog(this, panel_details.currentMedia.getTitle() + " was successfully purchased.");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "You either don't have enough money, or you already own this.");
+            }
         }
     }
 

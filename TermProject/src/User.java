@@ -1,31 +1,61 @@
-public abstract class User
+
+import java.util.ArrayList;
+
+public class User
 {
-	protected final String UserName;
-	protected String Password;
+	protected final String username;
+	protected String password;
+        protected boolean isAdmin;
+        protected double balance;
+        protected ArrayList<Media> purchasedMedia;
 	protected static int newName =1;
 
     // Default Constructor
 	public User()	// default constructor
 	{
-		UserName = "User"+newName;
+		username = "User"+newName;
 		newName++;
-		Password = "password";
+		password = "password";
+                purchasedMedia = new ArrayList<>();
 	}
 
 	// Init Constructor
-	public User(String UserName_IN, String Pass_IN1, String Pass_IN2)	// init constructor
+	public User(String username, String password, boolean isAdmin, double balance)	// init constructor
 	{
-		UserName = UserName_IN;
-		if(Pass_IN1==Pass_IN2)
-			Password = Pass_IN1;
-		//else
-			//error
+		this.username = username;
+                this.password = password;
+                this.balance = balance;
+                this.isAdmin = isAdmin;
+                purchasedMedia = new ArrayList<>();
 	}
 
-	public void ChangePassWord(String Password_IN)
-	{
-		if(Password_IN == Password)
-			Password = Password_IN;
-		return;
-	}	
+        public String getUsername()
+        {
+            return username;
+        }
+        public String getPassword()
+        {
+            return password;
+        }
+        public boolean isAdmin()
+        {
+            return isAdmin;
+        }
+        public boolean addMediaToLibrary(Media media)
+        {
+            if (media.getCost() > balance)
+            {
+                return false;
+            }
+            for (int i = 0;i < purchasedMedia.size(); i++)
+            {
+                if (media.productID == purchasedMedia.get(i).productID)
+                {
+                    return false;
+                }
+            }
+            purchasedMedia.add(media);
+            balance -= media.getCost();
+            return true;
+        }
 }

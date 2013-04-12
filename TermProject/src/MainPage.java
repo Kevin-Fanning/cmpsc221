@@ -2,17 +2,21 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 
 class MainPage extends JFrame implements ActionListener
 { 
     JPanel currentPanel;
+    JTabbedPane userPanels;
     StoreFrontPanel storeFront;
+    LibraryPanel libraryPanel;
     ManagerFrontPanel managerPage;
     LoginPanel loginPanel;
     
@@ -45,10 +49,15 @@ class MainPage extends JFrame implements ActionListener
         storeFront = new StoreFrontPanel();
         managerPage = new ManagerFrontPanel();
         loginPanel = new LoginPanel(this);
+        userPanels = new JTabbedPane();
+        libraryPanel = new LibraryPanel();
+        
+        userPanels.addTab("Store", storeFront);
+        userPanels.addTab("Library", libraryPanel);
         
         currentPanel = loginPanel;
         
-        storeFront.setPreferredSize(new Dimension(600, 500));
+        storeFront.setPreferredSize(new Dimension(800, 600));
         this.add(loginPanel);
     }
     
@@ -64,7 +73,7 @@ class MainPage extends JFrame implements ActionListener
             }
             else
             {
-                remove(storeFront);
+                remove(userPanels);
             }
             MediaStore.Logout();
             setJMenuBar(menuBar_notLoggedIn);
@@ -87,10 +96,21 @@ class MainPage extends JFrame implements ActionListener
                 if (MediaStore.isAdmin)
                 {
                     this.add(managerPage);
+                    
+                    
+                    int total = 0;
+                    for (int i = 0; i < MediaStore.getAllMedia().size(); i++)
+                    {
+                        total += MediaStore.getAllMedia().get(i).getRank();
+                    }
+                    managerPage.panel_details.tf_totalSold.setText(new Integer(total).toString());
                 }
                 else
                 {
-                    this.add(storeFront);
+                    this.add(userPanels);
+                    libraryPanel.refresh();
+                    DecimalFormat df = new DecimalFormat("####.##");
+                    storeFront.panel_details.currentCredits.setText(df.format(MediaStore.getUser().balance));
                 }
                 setVisible(true);
                 repaint();
@@ -100,9 +120,11 @@ class MainPage extends JFrame implements ActionListener
     
     public static void main(String[] args)
     {
+        MediaStore.Init();
+        
         MainPage app = new MainPage();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        app.setSize(620, 520);
+        app.setSize(820, 600);
         app.setVisible(true);
         
     }

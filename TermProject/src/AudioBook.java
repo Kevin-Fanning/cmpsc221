@@ -1,5 +1,6 @@
 /** * 
 Name: Jeff Dreyer 
+* Kevin Fanning
 * Section: 1 
 * Program: Project Phase 1 
 * Date: 2/18/2013 
@@ -8,6 +9,7 @@ Name: Jeff Dreyer
 
 /** 
 * @author Jeff Dreyer
+* Kevin Fanning
 * @version 1.0 2/18/2013
 * 
 * The AudioBook class extends the Media Class and will hold data members inherited from Media 
@@ -15,31 +17,13 @@ Name: Jeff Dreyer
 */
 public class AudioBook extends Media
 {
-	private int chapters; // will hold the number of chapters in an instance of the audio book
-
-	// default constructor
-	public AudioBook()
-	{
-		super();
-		chapters = 1;
-	}
-
+    public AudioBook()
+    {
+        super("", "", 0, 0, "", "");
+    }
 	// init constructor
-    public AudioBook(String titleIn, String authorIn, int rankIn, double costIn, String filename, int chaptersIn)
+    public AudioBook(String titleIn, String authorIn, int rankIn, double costIn, int chaptersIn, String duration, String genre)
     {
-        super(titleIn, authorIn, rankIn, costIn, filename);
-        chapters = chaptersIn;
-    }
-
-    // accessor method for chapter
-    public int getChapters()
-    {
-    	return chapters;
-    }
-
-    // modifier method for chapters
-    public void setChapters(int chaptersIn)
-    {
-    	chapters = chaptersIn;
+        super(titleIn, authorIn, rankIn, costIn, duration, genre);
     }
 }

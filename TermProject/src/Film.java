@@ -15,32 +15,33 @@ Name: Jeff Dreyer
 */
 public class Film extends Media 
 {
-	private String genre; 	// to hold genre of each film
+	private int releaseYear; 	// to hold genre of each film
 
 	// default constructor
 	public Film()
 	{
 		super();
-		genre = " ";
+		releaseYear = 1900;
 	}
 
 	// init constructor
-    public Film(String titleIn, String authorIn, int rankIn, double costIn, String filename, String genreIn)
+    public Film(String titleIn, String authorIn, int rankIn, double costIn, int releaseYear, String duration, String genre)
     {
-        super(titleIn, authorIn, rankIn, costIn, filename);
-    	genre = genreIn;
+        super(titleIn, authorIn, rankIn, costIn, duration, genre);
+    	this.releaseYear = releaseYear;
     }
 
     // Accessor for genre
-    public String getGenre()
+    public int getReleaseYear()
     {
-    	return genre;
+    	return releaseYear;
     }
 
     // Modifier Method for genre
-    public void setGenre(String genreIn)
+    @Override
+    public void setReleaseYear(int releaseYear)
     {
-    	genre = genreIn;
+    	this.releaseYear = releaseYear;
     }
 
 }

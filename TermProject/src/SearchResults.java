@@ -4,18 +4,21 @@ import javax.swing.event.ListSelectionListener;
 
 class SearchResults extends JPanel
 {
+    JLabel key;
     ListSelectionListener parent;
-    
     DefaultListModel productListModel;
     JList productList;
     
     public SearchResults(ListSelectionListener parent)
     {
         super();
+       
+        key = new JLabel("Title | Author/Artist/Director | Genre | Duration | Rank | Price");
+        add(key);
         productListModel = new DefaultListModel();
         productList = new JList(productListModel);
         productList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        productList.setPreferredSize(new Dimension(300, 400));
+        productList.setPreferredSize(new Dimension(500, 400));
         productList.addListSelectionListener(parent);
         add(productList);
     }

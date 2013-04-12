@@ -8,15 +8,10 @@ public class StoreTestDriver
     {
         MediaStore.Login("Kevin","nanana");
         
-        try {
-            MediaStore.addMedia(new Music("music111", "ffff", 3, 9.99, "1.mp3", "aGenre"));
-            MediaStore.addMedia(new Music("music222", "ffff", 5, 11.99, "2.mp3", "Genre2"));
-            MediaStore.addMedia(new AudioBook("book", "FDFDFD", 6, 8.57, "3.mp3", 4));
-        } 
-        catch (FileNotFoundException e)
-        {
-            System.err.println("Tried to add media that did not exist.\n" + e.getMessage());
-        }
+        MediaStore.addMedia(new Music("music111", "ffff", 3, 9.99, "aGenre", ""));
+        MediaStore.addMedia(new Music("music222", "ffff", 5, 11.99,  "Genre2", ""));
+        MediaStore.addMedia(new AudioBook("book", "FDFDFD", 6, 8.57,  4, "", ""));
+
         ArrayList<Media> allMusic = MediaStore.listMusic();
         
         for (Media m : allMusic)
@@ -35,7 +30,7 @@ public class StoreTestDriver
         }
         
         try {
-            MediaStore.purchaseProduct(1, "src/new.mp3");
+            MediaStore.purchaseProduct(1);
         } catch (Exception e)
         {
             System.err.println("ERROR: could not copy files");

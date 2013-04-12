@@ -4,7 +4,7 @@ import javax.swing.*;
 
 class SearchOptions extends JPanel
 {
-    static final String[] mediaTypes = {"All", "Music Albums", "Music Singles",
+    static final String[] mediaTypes = {"All", "Music",
         "Films", "AudioBooks" };
     
     static final String[] sortOptions = {"Title", "Artist/Author", "Genre", "Rank" };

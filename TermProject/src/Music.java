@@ -15,32 +15,15 @@ Name: Jeff Dreyer
 */
 public class Music extends Media
 {
-	private String genre; // to hold genre of each song
-
 	// default constructor
 	public Music()
 	{
 		super();
-		genre = " ";
 	}
 
 	// init constructor
-    public Music(String titleIn, String authorIn, int rankIn, double costIn, String filename, String genreIn)
+    public Music(String titleIn, String authorIn, int rankIn, double costIn, String genreIn, String duration)
     {
-        super(titleIn, authorIn, rankIn, costIn, filename);
-    	genre = genreIn;
+        super(titleIn, authorIn, rankIn, costIn, duration, genreIn);
     }
-
-    // Accessor for genre
-    public String getGenre()
-    {
-    	return genre;
-    }
-
-    // Modifier Method for genre
-    public void setGenre(String genreIn)
-    {
-    	genre = genreIn;
-    }
-
 }
