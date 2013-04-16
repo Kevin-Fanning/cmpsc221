@@ -26,7 +26,7 @@ class LibraryPanel extends JPanel
     }
     public void refresh()
     {
-        ArrayList<Media> media = MediaStore.getUser().purchasedMedia;
+        ArrayList<Media> media = MediaStore.getUsersMedia();
         model.clear();
         for (int i = 0; i < media.size(); i++)
         {

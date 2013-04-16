@@ -32,6 +32,7 @@ public class Film extends Media
     }
 
     // Accessor for genre
+    @Override
     public int getReleaseYear()
     {
     	return releaseYear;

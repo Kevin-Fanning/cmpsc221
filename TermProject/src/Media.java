@@ -34,7 +34,7 @@ public abstract class Media
 		author = " ";
 		rank = -1;
 		cost = 0.00;
-                productID = ++numOfProducts;
+                productID = numOfProducts;
                 duration = "";
                 genre = " ";
 	}
@@ -42,11 +42,11 @@ public abstract class Media
 	// Init Constructor
 	public Media(String titleIn, String authorIn, int rankIn, double costIn, String duration, String genre)	// init constructor
 	{
-		title = titleIn;
-		author = authorIn;
-		rank = rankIn;
-		cost = costIn;
-        productID = ++numOfProducts;
+            title = titleIn;
+            author = authorIn;
+            rank = rankIn;
+            cost = costIn;
+            productID = numOfProducts;
             this.duration = duration;
             this.genre = genre;
 	}
@@ -92,6 +92,10 @@ public abstract class Media
     public String getGenre()
     {
         return genre;
+    }
+    public int getReleaseYear()
+    {
+        return 0;
     }
 	// Set Methods --------------------------------------------
 

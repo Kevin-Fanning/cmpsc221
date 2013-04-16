@@ -4,13 +4,10 @@
  * date: 3/18/2013
  * section: 1
  */
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import javax.swing.JDialog;
+import java.sql.*;
 
 /**
  * This class 
@@ -21,31 +18,30 @@ public class MediaStore {
     private static User currentUser;
     public static boolean isAdmin = false; //is the logged in user an admin?
     
+    private static Connection dbConnection;
+    
     //TODO: linkedList is temporary replacement for a database
     //private static LinkedList<Media> media = new LinkedList<>();
     private static ArrayList<Media> media = new ArrayList<>();
-    
-    //TODO: Replace with database of users
-    private static ArrayList<User> users = new ArrayList<>();
-    
     
     /**
      * Initializes the store with some test stuff
      */
     public static void Init()
     {
-        User tom = new User("Tom", "password", true, 1000.0);
-        User bill = new User("Bill", "password", false, 1000.0);
-        User broke = new User("Broke", "password", false, 0.0);
-        
-        users.add(tom);
-        users.add(bill);
-        users.add(broke);
-        
-        MediaStore.addMedia(new Film("Star Wars", "George Lucas", 1, 10.99, 1974, "2:45:00", "Action"));
-        MediaStore.addMedia(new Film("Lion King", "ZDisney", 2, 15.99, 1994,  "1:30:00", "Family"));
-        MediaStore.addMedia(new Music("Take Me Out", "Franz Ferdinand", 4, 0.99, "Alt Rock", "3:00"));
-        MediaStore.addMedia(new AudioBook("The Eye of the World", "Robert Jordan", 30, 4.99, 52, "45:00", "Adventure"));
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance(); 
+            dbConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/cmpsc221", "Tom", "password");
+            
+            Statement statement = dbConnection.createStatement();
+            ResultSet rs = statement.executeQuery("select count(*) number from MEDIA");
+            rs.next();
+            Media.numOfProducts = rs.getInt("number") + 1;
+        }
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e)
+        {
+            System.out.println("Error connecting to database");
+        }
     }
     
     /**
@@ -56,16 +52,20 @@ public class MediaStore {
     public static boolean Login(String username, String password)
     {
         //TODO: Look up username in database and check it against password
-        
-        for (int i = 0; i < users.size(); i++)
+        try 
         {
-            if (username.equals(users.get(i).getUsername()))
+            Statement statement = dbConnection.createStatement();
+            ResultSet results = statement.executeQuery("select * from USERS where USERNAME = \'" + username + "\'");
+            
+            if (results.next())
             {
-                if (users.get(i).getPassword().equals(password))
+                String pass = results.getString("PASSWORD");
+            
+                if (pass.equals(password))
                 {
                     isLoggedIn = true;
-                    currentUser = users.get(i);
-                    if (users.get(i).isAdmin()) 
+                    currentUser = new User(username, password, results.getBoolean("ISADMIN"), results.getDouble("BALANCE"));
+                    if (currentUser.isAdmin()) 
                     { 
                         isAdmin = true; 
                     }
@@ -73,13 +73,19 @@ public class MediaStore {
                     {
                         isAdmin = false;
                     }
+                    statement.close();
+                    results.close();
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+
+                statement.close();
+                results.close();
             }
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            return false;
         }
         return false;
         
@@ -104,17 +110,100 @@ public class MediaStore {
      */
     public static void addMedia(Media newMedia)
     {
-       media.add(newMedia);
+       try
+       {
+            Statement statement = dbConnection.createStatement();
+            
+            String type = "";
+            if (newMedia instanceof Film)
+            {
+                type = "FILM";
+            }
+            else if (newMedia instanceof Music)
+            {
+                type = "MUSIC";
+            }
+            else if (newMedia instanceof AudioBook)
+            {
+                type = "AUDIOBOO";
+            }
+            String sql = String.format("insert into MEDIA (ID, TYPE, TITLE, AUTHOR, DURATION, RANK, COST, GENRE, RELEASEYEAR) values" + 
+                    "(%d, \'%s\', \'%s\', \'%s\', \'%s\', %d, %f, \'%s\', %d)",
+                    newMedia.productID,type,newMedia.getTitle(),newMedia.getAuthor(),newMedia.getDuration(),newMedia.getRank(),
+                    newMedia.getCost(),newMedia.getGenre(),newMedia.getReleaseYear());
+            
+            System.out.println(sql);
+            statement.execute(sql);
+            Media.numOfProducts++;
+            statement.close();
+       }
+       catch (SQLException e)
+       {
+           System.out.println(e.getMessage());
+       }
     }
     
     public static void removeMedia(Media dMedia)
     {
-        media.remove(dMedia);
+        //media.remove(dMedia);
+        
+        try 
+        {
+            Statement statement = dbConnection.createStatement();
+            
+            statement.execute("delete from MEDIA where ID = " + dMedia.productID);
+        
+            statement.close();
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Delete Failed");
+        }
+        
     }
     
     //Getters --------------------------------------------------------------
     public static ArrayList<Media> getAllMedia()
     {
+        //return media;
+        media.clear();
+        try
+        {
+            Statement statement = dbConnection.createStatement();
+            ResultSet rs = statement.executeQuery("select * from MEDIA");
+            
+            while (rs.next())
+            {
+                Media newMedia = new Music();
+                String type = rs.getString("TYPE");
+                switch (type) {
+                    case "FILM":
+                        newMedia = new Film();
+                        break;
+                    case "MUSIC":
+                        newMedia = new Music();
+                        break;
+                    case "AUDIOBOO":
+                        newMedia = new AudioBook();
+                        break;
+                }
+                
+                newMedia.setTitle(rs.getString("TITLE"));
+                newMedia.setAuthor(rs.getString("AUTHOR"));
+                newMedia.setDuration(rs.getString("DURATION"));
+                newMedia.setCost(rs.getDouble("COST"));
+                newMedia.setGenre(rs.getString("GENRE"));
+                newMedia.setRank(rs.getInt("RANK"));
+                newMedia.setReleaseYear(rs.getInt("RELEASEYEAR"));
+                newMedia.productID = rs.getInt("ID");
+                
+                media.add(newMedia);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
         return media;
     }
     //These next three iterate over the list and pulls the ones with matching type
@@ -126,6 +215,7 @@ public class MediaStore {
     public static ArrayList<Media> listMusic()
     {
         ArrayList<Media> result = new ArrayList<>();
+        media = getAllMedia();
         for (Media m : media)
         {
             if (m instanceof Music)
@@ -142,6 +232,7 @@ public class MediaStore {
     public static ArrayList<Media> listFilms()
     {
         ArrayList<Media> result = new ArrayList<>();
+        media = getAllMedia();
         for (Media m : media)
         {
             if (m instanceof Film)
@@ -157,6 +248,7 @@ public class MediaStore {
     public static ArrayList<Media> listAudioBooks()
     {
         ArrayList<Media> result = new ArrayList<>();
+        media = getAllMedia();
         for (Media m : media)
         {
             if (m instanceof AudioBook)
@@ -178,23 +270,53 @@ public class MediaStore {
     {
         if (isLoggedIn && !isAdmin)
         {
-            for (Media m : media)
+            try 
             {
-                if (m.getProductID() == productID)
+                Statement statement = dbConnection.createStatement();
+                ResultSet rs = statement.executeQuery("select * from MEDIA where ID = " + productID);
+                
+                if (rs.next())
                 {
-                    //Check user's credit and deduct if possible
-                    //Show dialog if not
-                    if (currentUser.addMediaToLibrary(m))
+                    double cost = rs.getDouble("COST");
+                    if (cost < currentUser.balance)
                     {
-                        //Success!
-                        m.setRank(m.getRank() + 1);
+                        ResultSet isowned = statement.executeQuery("select MEDIA_ID from OWNERS where MEDIA_ID = " + productID);
+                        if (isowned.next())
+                        {
+                            isowned.close();
+                            rs.close();
+                            statement.close();
+                            return false;
+                        }
+                        statement.execute("insert into OWNERS (OWNER, MEDIA_ID) values (\'" +
+                                currentUser.username + "\', " + productID + ")");
+                        statement.execute("update MEDIA set RANK = RANK + 1 where ID = " + productID);
+                        
+                        currentUser.balance -= cost;
+                        statement.execute("update USERS set BALANCE = BALANCE - " + cost + "where USERNAME = \'" +
+                                currentUser.getUsername() + "\'");
+                        
+                        statement.close();
+                        rs.close();
                         return true;
                     }
                     else
                     {
+                        statement.close();
+                        rs.close();
                         return false;
                     }
                 }
+                else
+                {
+                    statement.close();
+                    rs.close();
+                    return false;
+                }
+            }
+            catch (SQLException e)
+            {
+                System.out.println(e.getMessage());
             }
         }
         else
@@ -202,5 +324,55 @@ public class MediaStore {
             System.err.println("NOT LOGGED IN");
         }
         return false;
+    }
+    
+    public static ArrayList<Media> getUsersMedia()
+    {
+        ArrayList<Media> result = new ArrayList<>();
+        
+        try 
+        {
+            Statement statement = dbConnection.createStatement();
+            ResultSet rs = statement.executeQuery("select MEDIA_ID from OWNERS where OWNER = \'" + currentUser.getUsername() + "\'");
+            
+            while(rs.next())
+            {
+                Statement mediaStatement = dbConnection.createStatement();
+                ResultSet mediaResult = mediaStatement.executeQuery("select * from MEDIA where ID = " + rs.getInt("MEDIA_ID"));
+                Media newMedia = new Music();
+                mediaResult.next();
+                String type = mediaResult.getString("TYPE");
+                switch (type) {
+                    case "FILM":
+                        newMedia = new Film();
+                        break;
+                    case "MUSIC":
+                        newMedia = new Music();
+                        break;
+                    case "AUDIOBOO":
+                        newMedia = new AudioBook();
+                        break;
+                }
+                
+                newMedia.setTitle(mediaResult.getString("TITLE"));
+                newMedia.setAuthor(mediaResult.getString("AUTHOR"));
+                newMedia.setDuration(mediaResult.getString("DURATION"));
+                newMedia.setCost(mediaResult.getDouble("COST"));
+                newMedia.setGenre(mediaResult.getString("GENRE"));
+                newMedia.setRank(mediaResult.getInt("RANK"));
+                newMedia.setReleaseYear(mediaResult.getInt("RELEASEYEAR"));
+                newMedia.productID = mediaResult.getInt("ID");
+                
+                result.add(newMedia);
+                
+                mediaStatement.close();
+                mediaResult.close();
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }
